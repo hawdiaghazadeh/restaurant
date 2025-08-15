@@ -1,0 +1,36 @@
+
+services:
+    db:
+        container_name: db
+        image: postgres:15
+        environment:
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        networks:
+            - restaurant_network
+    backend:
+        container_name: backend
+        build: backend
+        env_file:
+            - .env
+        volumes:
+            - ./backend:/app
+        ports:
+            - "${BACKEND_PORT}:8000"
+        depends_on:
+            - db
+        networks:
+            - restaurant_network
+        environment:
+            DB_NAME: ${POSTGRES_DB}
+            DB_USER: ${POSTGRES_USER}
+            DB_PASSWORD: ${POSTGRES_PASSWORD}
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+volumes:
+    postgres_data:
+networks:
+    restaurant_network:
