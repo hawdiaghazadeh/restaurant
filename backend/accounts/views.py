@@ -16,12 +16,14 @@ class RegisterView(APIView):
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
+        operation_id="Register",
+        operation_summary="User Register API",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 'email': openapi.Schema(type=openapi.TYPE_STRING, default='user@example.com'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
-                'password2': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456'),
+                'password2': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456'),
             },
             required=['email', 'password', 'password2']
         ),
@@ -41,11 +43,13 @@ class LoginView(APIView):
     permission_classes = (AllowAny,)
 
     @swagger_auto_schema(
+        operation_id="Login",
+        operation_summary="User Login API",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 'email': openapi.Schema(type=openapi.TYPE_STRING, default='user@example.com'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456'),
             },
             required=['email', 'password']
         ),
@@ -70,12 +74,14 @@ class ChangePasswordView(APIView):
     permission_classes = (IsAuthenticated,)
 
     @swagger_auto_schema(
+        operation_id="Change Password",
+        operation_summary="User Change Password API",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                'old_password': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
-                'password': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
-                'password2': openapi.Schema(type=openapi.TYPE_STRING, default='********'),
+                'old_password': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456789'),
+                'password2': openapi.Schema(type=openapi.TYPE_STRING, default='Test123456789'),
             },
             required=['old_password', 'password', 'password2']
         ),
@@ -93,6 +99,8 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(
+        operation_id="Logout",
+        operation_summary="User Logout API",
         tags=['Authentication']
     )
     def post(self, request):

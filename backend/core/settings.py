@@ -36,7 +36,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 APPS = [
-    'accounts'
+    'accounts',
+    'reservation'
 ]
 
 INSTALLED_PACKAGES = [
@@ -58,8 +59,9 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'accounts.authentication.CookieJWTAuthentication',
-    ]
+        'core.authentication.CookieJWTAuthentication',
+    ],
+    'EXCEPTION_HANDLER': 'core.exceptions.custom_exception_handler',
 }
 
 SIMPLE_JWT = {
@@ -87,11 +89,14 @@ SWAGGER_SETTINGS = {
     'USE_SESSION_AUTH': False,  # چون از JWT استفاده می‌کنیم
 }
 
-MIDDLEWARE = [
+SCRF_MIDDLEWARE = [
     # csrf middlewares
-    'accounts.middleware.EnsureCSRFMiddleware',
+    'core.middleware.EnsureCSRFMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+]
 
+MIDDLEWARE = [
+    *SCRF_MIDDLEWARE,
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

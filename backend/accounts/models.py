@@ -46,6 +46,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30, blank=True , null=False, default="")
     last_name = models.CharField(max_length=30, blank=True , null=False , default='')
+    phone_number = models.CharField(max_length=20, blank=True , null=False, default="")
     image = models.ImageField(default='alternative/user.png', upload_to='media/profile_pics')
 
     def __str__(self):
